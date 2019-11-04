@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "San Franciso Bus stop by districts",
   "main": "index.js",
-  "scripts": {"start": "node build-scripts/processData.js && live-server"
-},
+  "scripts": {
+    "start": "node build-scripts/processData.js && live-server"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/genehahn48/map675-module-02-sanfransco-bus.git"
