@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "description": "San Franciso Bus stop by districts",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {"start": "node build-scripts/processData.js && live-server"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/genehahn48/map675-module-02-sanfransco-bus.git"
@@ -23,6 +22,12 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/genehahn48/map675-module-02-sanfransco-bus/issues"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "csv-parse": "^4.6.5",
+    "csv2geojson": "^5.1.1",
+    "mapshaper": "^0.4.140"
   },
   "homepage": "https://github.com/genehahn48/map675-module-02-sanfransco-bus#readme"
 }
