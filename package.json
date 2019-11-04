@@ -1,0 +1,28 @@
+{
+  "name": "map675-module-02-sanfransco-bus",
+  "version": "1.0.0",
+  "description": "San Franciso Bus stop by districts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/genehahn48/map675-module-02-sanfransco-bus.git"
+  },
+  "keywords": [
+    "bus",
+    "stops",
+    "San",
+    "Franciso",
+    "Public",
+    "transit",
+    "transportation"
+  ],
+  "author": "Gene Hahn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/genehahn48/map675-module-02-sanfransco-bus/issues"
+  },
+  "homepage": "https://github.com/genehahn48/map675-module-02-sanfransco-bus#readme"
+}
