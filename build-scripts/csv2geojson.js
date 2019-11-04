@@ -43,7 +43,7 @@ function filterFields(geojson) { // filter fields from csv file
     var tempProps = {};
 
     for (var prop in feature.properties) {
-      if (prop === 'Current_Supervisor_Districts' || prop === 'STOPID') {
+      if (prop === 'Current Supervisor Districts' || prop === 'STOPID') {
         tempProps[prop] = feature.properties[prop];
       }
     }
