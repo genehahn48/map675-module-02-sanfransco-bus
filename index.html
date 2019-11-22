@@ -62,8 +62,8 @@
 
   <!-- legend placeholder -->
   <div id="ui">
-    <h3>San Francisco City Districts</h3>
-    <h4>(number of bus stops)</h4>
+    <h3>Fishing Access in Kentucky</h3>
+    <h4>(number of Fishing Spots)</h4>
     <ul id="legend-list"></ul>
   </div>
 
@@ -91,13 +91,13 @@
     }).addTo(map);
 
     // use D3 fetch to request data with async requests
-    const districtsData = d3.json('data/districts-counts-bus.json');
+    const kyCounties = d3.json('data/ky-counties.json');
     const colorsData = d3.json('data/Prismcolors.json');
-    const busStop_Data = d3.json('data/bus-stops.json');
+    // const busStop_Data = d3.json('data/bus-stops.json');
 
 
     // use Promise to wait until data is all loaded
-    Promise.all([districtsData, colorsData, busStop_Data]).then(dataReady);
+    Promise.all([kyCounties, colorsData, busStop_Data]).then(dataReady);
 
 
     function dataReady(data) {
