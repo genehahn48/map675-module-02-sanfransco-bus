@@ -91,7 +91,7 @@
     }).addTo(map);
 
     // use D3 fetch to request data with async requests
-    const districtsData = d3.json('data/districts-counts-bus.json');
+    const districtsData = d3.json('data/district-counts-bus.json');
     const colorsData = d3.json('data/Prismcolors.json');
     const busStop_Data = d3.json('data/bus-stops.json');
 
@@ -110,6 +110,7 @@
       const districts = data[0];
       const colors = data[1];
       const busStop = data[2];
+      // console.log(districts);
       // create new markerClusterGroup
       var markers = L.markerClusterGroup();
 
@@ -139,21 +140,19 @@
         legendList.append('<li class="legend-item" id="district-' + i + '"><a style="color:' + colors.Prism[10][i - 1] + '" href="#">District ' + i + ' (<span></span>)</a></li>');
       }
 
-
       // create a layerGroup with the geojson data
       var districtsLayerGroup = L.geoJson(districts, {
-
         style: function(feature) {
           // use the colors object to style
           // each polygon a unique color
           return {
-            color: colors.Prism[10][feature.properties.supdistpad - 1],
+            color: colors.Prism[10][Number(feature.properties.supdistpad) - 1],
             fillOpacity: .6
           }
         },
         onEachFeature(feature, layer) {
           // select each legend list item span and append the total count of signals
-          $('#district-' + feature.properties.supdistpad + ' span').append(feature.properties.count);
+          $('#district-' + Number(feature.properties.supdistpad) + ' span').append(feature.properties.count);
 
           //when mousing over a polygon layer
           layer.on('mouseover', function() {
@@ -164,7 +163,7 @@
 
             // select the cooresponding list item
             // and add the highlight class to make bold
-            $('#district-' + feature.properties.supdistpad).addClass('highlight');
+            $('#district-' + Number(feature.properties.supdistpad)).addClass('highlight');
           })
         }
       }).addTo(map);
