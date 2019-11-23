@@ -91,34 +91,37 @@
     }).addTo(map);
 
     // use D3 fetch to request data with async requests
-    const kyCounties = d3.json('data/ky-region-count.geojson');
+    const kyRegions = d3.json('data/ky-region-count.geojson');
     const colorsData = d3.json('data/Prismcolors.json');
-    const fishing_Data = d3.json('data/ky-fish.json');
+    const fishingData = d3.json('data/ky-fish.json');
 
 
     // use Promise to wait until data is all loaded
-    Promise.all([kyCounties, colorsData, fishing_Data]).then(dataReady);
+    Promise.all([kyRegions, colorsData, fishingData]).then(dataReady);
 
 
     function dataReady(data) {
       // function is called when Promise is fulfilled and data is ready
 
       // inspect array of data
-      console.log(data);
+      // console.log(data);
 
       // pull out separate data arrays and assign to variables
       const region = data[0];
       const colors = data[1];
       const fishAccess = data[2];
-      console.log(fishAccess);
-      console.log(region.features.length)
+
+      // test variables for data in sigle array
+      // console.log(fishAccess);
+      // console.log(region.features.length);
+      // console.log(colors);
+
       // create new markerClusterGroup
       var markers = L.markerClusterGroup();
 
-
-
       // loop through all our signals features
       fishAccess.features.forEach(function(feature) {
+        console.log(feature.properties.SiteName);
         // create a new Leaflet marker for each
         var coords = feature.geometry.coordinates,
           marker = L.marker([coords[1], coords[0]]);
@@ -130,8 +133,8 @@
       });
       // add the markerClusterGroup to the map
       map.addLayer(markers);
-      // // convert GeoJSON to Leaflet L.geoJson() object and add to the map
-      // L.geoJson(districts).addTo(map);
+      // convert GeoJSON to Leaflet L.geoJson() object and add to the map
+      L.geoJson(region).addTo(map);
 
       // Add legend information.
       // store a reference to the HTML list
@@ -151,13 +154,13 @@
           // use the colors object to style
           // each polygon a unique color
           return {
-            color: colors.Prism[8][feature.properties.region - 1],
+            color: colors.Prism[7][feature.properties.region_num - 1],
             fillOpacity: .6
           }
         },
         onEachFeature(feature, layer) {
           // select each legend list item span and append the total count of signals
-          $('#region-' + feature.properties.region + ' span').append(feature.properties.numpoints);
+          $('#region-' + feature.properties.region_num + ' span').append(feature.properties.numpoints);
 
           //when mousing over a polygon layer
           layer.on('mouseover', function() {
@@ -168,7 +171,7 @@
 
             // select the cooresponding list item
             // and add the highlight class to make bold
-            $('#region-' + feature.properties.region).addClass('highlight');
+            $('#region-' + feature.properties.region_num).addClass('highlight');
           })
         }
       }).addTo(map);
@@ -182,10 +185,10 @@
       });
 
       function highlightRegion(regionNum) {
-        // loop through the districts polygons
+        // loop through the region polygons
         regionLayerGroup.eachLayer(function(layer) {
           // if the district id matches the one we're mousing over
-          if (layer.feature.properties.region === regionNum) {
+          if (layer.feature.properties.region_num === regionNum) {
             // change the layer style
             layer.setStyle({
               fillOpacity: .8
