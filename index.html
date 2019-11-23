@@ -91,13 +91,13 @@
     }).addTo(map);
 
     // use D3 fetch to request data with async requests
-    const kyCounties = d3.json('data/ky-counties.json');
+    const kyCounties = d3.json('data/ky-region-count.geojson');
     const colorsData = d3.json('data/Prismcolors.json');
-    // const busStop_Data = d3.json('data/bus-stops.json');
+    const fishing_Data = d3.json('data/ky-fish.json');
 
 
     // use Promise to wait until data is all loaded
-    Promise.all([kyCounties, colorsData, busStop_Data]).then(dataReady);
+    Promise.all([kyCounties, colorsData, fishing_Data]).then(dataReady);
 
 
     function dataReady(data) {
@@ -107,19 +107,23 @@
       console.log(data);
 
       // pull out separate data arrays and assign to variables
-      const districts = data[0];
+      const region = data[0];
       const colors = data[1];
-      const busStop = data[2];
+      const fishAccess = data[2];
+      console.log(fishAccess);
+      console.log(region.features.length)
       // create new markerClusterGroup
       var markers = L.markerClusterGroup();
 
+
+
       // loop through all our signals features
-      busStop.features.forEach(function(feature) {
+      fishAccess.features.forEach(function(feature) {
         // create a new Leaflet marker for each
         var coords = feature.geometry.coordinates,
           marker = L.marker([coords[1], coords[0]]);
         // bind a tooltip to the marker
-        marker.bindTooltip("Stop ID: " + feature.properties.STOPID);
+        marker.bindTooltip("Name " + feature.properties.SiteName);
         // add the marker to the markerClusterGroup
         markers.addLayer(marker);
 
@@ -135,25 +139,25 @@
 
       // loop through the features and create a new
       // list item for each feature in the legend
-      for (let i = 1; i <= districts.features.length; i++) {
-        legendList.append('<li class="legend-item" id="district-' + i + '"><a style="color:' + colors.Prism[10][i - 1] + '" href="#">District ' + i + ' (<span></span>)</a></li>');
+      for (let i = 1; i <= region.features.length; i++) {
+        legendList.append('<li class="legend-item" id="region-' + i + '"><a style="color:' + colors.Prism[7][i - 1] + '" href="#">Region ' + i + ' (<span></span>)</a></li>');
       }
 
 
       // create a layerGroup with the geojson data
-      var districtsLayerGroup = L.geoJson(districts, {
+      var regionLayerGroup = L.geoJson(region, {
 
         style: function(feature) {
           // use the colors object to style
           // each polygon a unique color
           return {
-            color: colors.Prism[10][feature.properties.supdistpad - 1],
+            color: colors.Prism[8][feature.properties.region - 1],
             fillOpacity: .6
           }
         },
         onEachFeature(feature, layer) {
           // select each legend list item span and append the total count of signals
-          $('#district-' + feature.properties.supdistpad + ' span').append(feature.properties.count);
+          $('#region-' + feature.properties.region + ' span').append(feature.properties.numpoints);
 
           //when mousing over a polygon layer
           layer.on('mouseover', function() {
@@ -164,7 +168,7 @@
 
             // select the cooresponding list item
             // and add the highlight class to make bold
-            $('#district-' + feature.properties.supdistpad).addClass('highlight');
+            $('#region-' + feature.properties.region).addClass('highlight');
           })
         }
       }).addTo(map);
@@ -172,16 +176,16 @@
       $('.legend-item').on('mouseover', function() {
         // extract the specific number from the specific item
         // being moused over
-        var num = this.id.replace('district-', '');
+        var num = this.id.replace('region-', '');
         // send this number as an argument to the highlightDistrict function
-        highlightDistrict(num);
+        highlightRegion(num);
       });
 
-      function highlightDistrict(districtNum) {
+      function highlightRegion(regionNum) {
         // loop through the districts polygons
-        districtsLayerGroup.eachLayer(function(layer) {
+        regionLayerGroup.eachLayer(function(layer) {
           // if the district id matches the one we're mousing over
-          if (layer.feature.properties.supdistpad === districtNum) {
+          if (layer.feature.properties.region === regionNum) {
             // change the layer style
             layer.setStyle({
               fillOpacity: .8

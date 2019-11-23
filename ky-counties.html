@@ -43,7 +43,7 @@
       maxZoom: 18,
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, &copy;<a href="https://carto.com/attribution">CARTO</a>'
     }).addTo(map);
-    d3.json('data/ky-counties.json').then(function(data) {
+    d3.json('data/ky-counties.geojson').then(function(data) {
       L.geoJson(data).addTo(map)
     });
   </script>
