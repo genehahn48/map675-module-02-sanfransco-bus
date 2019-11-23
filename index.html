@@ -121,7 +121,7 @@
 
       // loop through all our signals features
       fishAccess.features.forEach(function(feature) {
-        console.log(feature.properties.SiteName);
+        // console.log(feature.properties.SiteName); // test property name
         // create a new Leaflet marker for each
         var coords = feature.geometry.coordinates,
           marker = L.marker([coords[1], coords[0]]);
@@ -159,6 +159,7 @@
           }
         },
         onEachFeature(feature, layer) {
+          console.log(feature);
           // select each legend list item span and append the total count of signals
           $('#region-' + feature.properties.region_num + ' span').append(feature.properties.numpoints);
 
@@ -166,7 +167,7 @@
           layer.on('mouseover', function() {
             // provide a visual affordance
             this.setStyle({
-              fillOpacity: .8
+              fillOpacity: .6
             });
 
             // select the cooresponding list item
@@ -196,7 +197,7 @@
           } else {
             // return to original
             layer.setStyle({
-              fillOpacity: .6
+              fillOpacity: .2
             });
           }
         });
