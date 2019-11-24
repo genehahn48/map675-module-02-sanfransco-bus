@@ -48,7 +48,9 @@ function bindData(geojson, csv) { // combine csv file with geojson file
     let count = 0;
 
     csv.forEach((row) => { // loop each row
-      if (feature.properties.supdistpad === row.Current_Supervisor_Districts) { // test row council_di matches COUNCIL_DISTRICT to count total per district
+      if (feature.properties.supdistpad === row.Current_Supervisor_Districts) { // test row Current_Supervisor_Districts matches supdistpad (need to change to number) to count total per district
+        console.log(Number(feature.properties.supdistpad))
+        // console.log(row.Current_Supervisor_Districts)
         count++
       }
     });

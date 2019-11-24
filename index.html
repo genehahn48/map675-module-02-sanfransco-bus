@@ -94,10 +94,11 @@
     const districtsData = d3.json('data/district-counts-bus.json');
     const colorsData = d3.json('data/Prismcolors.json');
     const busStop_Data = d3.json('data/bus-stops.json');
+    const busRoutes = d3.json('data/routes.geojson');
 
 
     // use Promise to wait until data is all loaded
-    Promise.all([districtsData, colorsData, busStop_Data]).then(dataReady);
+    Promise.all([districtsData, colorsData, busStop_Data, busRoutes]).then(dataReady);
 
 
     function dataReady(data) {
@@ -110,7 +111,13 @@
       const districts = data[0];
       const colors = data[1];
       const busStop = data[2];
+      const routes = data[3];
       // console.log(districts);
+      // // add routes to map
+      // routes.features.forEach(function(feature) {
+      //   routes.addTo(map)
+      // });
+
       // create new markerClusterGroup
       var markers = L.markerClusterGroup();
 
@@ -137,7 +144,7 @@
       // loop through the features and create a new
       // list item for each feature in the legend
       for (let i = 1; i <= districts.features.length; i++) {
-        legendList.append('<li class="legend-item" id="district-' + i + '"><a style="color:' + colors.Prism[10][i - 1] + '" href="#">District ' + i + ' (<span></span>)</a></li>');
+        legendList.append('<li class="legend-item" id="district-' + i + '"><a style="color:' + colors.Prism[11][i - 1] + '" href="#">District ' + i + ' (<span></span>)</a></li>');
       }
 
       // create a layerGroup with the geojson data
@@ -146,7 +153,7 @@
           // use the colors object to style
           // each polygon a unique color
           return {
-            color: colors.Prism[10][Number(feature.properties.supdistpad) - 1],
+            color: colors.Prism[11][Number(feature.properties.supdistpad) - 1],
             fillOpacity: .6
           }
         },
