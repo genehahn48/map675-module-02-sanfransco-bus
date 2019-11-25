@@ -112,7 +112,7 @@
       const fishAccess = data[2];
 
       // test variables for data in sigle array
-      // console.log(fishAccess);
+      console.log(fishAccess);
       // console.log(region.features.length);
       // console.log(colors);
 
@@ -126,7 +126,7 @@
         var coords = feature.geometry.coordinates,
           marker = L.marker([coords[1], coords[0]]);
         // bind a tooltip to the marker
-        marker.bindTooltip("Name " + feature.properties.SiteName);
+        marker.bindTooltip("Name " + feature.properties.SiteName + "<br>Access: " + feature.properties.AccessType);
         // add the marker to the markerClusterGroup
         markers.addLayer(marker);
 
@@ -154,25 +154,25 @@
           // use the colors object to style
           // each polygon a unique color
           return {
-            color: colors.Prism[7][feature.properties.region_num - 1],
+            color: colors.Prism[7][feature.properties.REGION_NUM - 1],
             fillOpacity: .6
           }
         },
         onEachFeature(feature, layer) {
           console.log(feature);
           // select each legend list item span and append the total count of signals
-          $('#region-' + feature.properties.region_num + ' span').append(feature.properties.numpoints);
+          $('#region-' + feature.properties.REGION_NUM + ' span').append(feature.properties.NUMPOINTS);
 
           //when mousing over a polygon layer
           layer.on('mouseover', function() {
             // provide a visual affordance
             this.setStyle({
-              fillOpacity: .6
+              fillOpacity: .8
             });
 
             // select the cooresponding list item
             // and add the highlight class to make bold
-            $('#region-' + feature.properties.region_num).addClass('highlight');
+            $('#region-' + feature.properties.REGION_NUM).addClass('highlight');
           })
         }
       }).addTo(map);
@@ -189,15 +189,15 @@
         // loop through the region polygons
         regionLayerGroup.eachLayer(function(layer) {
           // if the district id matches the one we're mousing over
-          if (layer.feature.properties.region_num === regionNum) {
+          if (layer.feature.properties.REGION_NUM === regionNum) {
             // change the layer style
             layer.setStyle({
-              fillOpacity: .8
+              fillOpacity: .6
             }).bringToFront();
           } else {
             // return to original
             layer.setStyle({
-              fillOpacity: .2
+              fillOpacity: .8
             });
           }
         });
