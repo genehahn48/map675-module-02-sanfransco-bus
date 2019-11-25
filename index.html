@@ -153,13 +153,13 @@
           // use the colors object to style
           // each polygon a unique color
           return {
-            color: colors.Prism[11][Number(feature.properties.supdistpad) - 1],
+            color: colors.Prism[11][parseInt(feature.properties.supdistpad) - 1],
             fillOpacity: .6
           }
         },
         onEachFeature(feature, layer) {
           // select each legend list item span and append the total count of signals
-          $('#district-' + Number(feature.properties.supdistpad) + ' span').append(feature.properties.count);
+          $('#district-' + parseInt(feature.properties.supdistpad) + ' span').append(feature.properties.count);
 
           //when mousing over a polygon layer
           layer.on('mouseover', function() {
@@ -170,7 +170,7 @@
 
             // select the cooresponding list item
             // and add the highlight class to make bold
-            $('#district-' + Number(feature.properties.supdistpad)).addClass('highlight');
+            $('#district-' + parseInt(feature.properties.supdistpad)).addClass('highlight');
           })
         }
       }).addTo(map);
@@ -187,7 +187,7 @@
         // loop through the districts polygons
         districtsLayerGroup.eachLayer(function(layer) {
           // if the district id matches the one we're mousing over
-          if (layer.feature.properties.supdistpad === districtNum) {
+          if (parseInt(layer.feature.properties.supdistpad) === parseInt(districtNum)) {
             // change the layer style
             layer.setStyle({
               fillOpacity: .8
