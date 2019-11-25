@@ -112,11 +112,8 @@
       const colors = data[1];
       const busStop = data[2];
       const routes = data[3];
-      // console.log(districts);
-      // // add routes to map
-      // routes.features.forEach(function(feature) {
-      //   routes.addTo(map)
-      // });
+      // add routes to map
+      // L.polyline(routes).addTo(map);
 
       // create new markerClusterGroup
       var markers = L.markerClusterGroup();
@@ -135,7 +132,6 @@
       // add the markerClusterGroup to the map
       map.addLayer(markers);
       // // convert GeoJSON to Leaflet L.geoJson() object and add to the map
-      // L.geoJson(districts).addTo(map);
 
       // Add legend information.
       // store a reference to the HTML list
@@ -174,6 +170,20 @@
           })
         }
       }).addTo(map);
+
+      // add routes to map
+      var routesLayerGroup = L.geoJson(routes, {
+        style: function(feature) {
+          // use the colors object to style
+          // each polygon a unique color
+          return {
+            color: 'grey',
+            weight: 1
+          }
+        }
+      }).addTo(map);
+
+
       // select all the list items and on mouseover
       $('.legend-item').on('mouseover', function() {
         // extract the specific number from the specific item
