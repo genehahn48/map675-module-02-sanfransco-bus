@@ -27,8 +27,8 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "csv-parse": "^4.6.5",
-    "csv2geojson": "^5.1.1",
-    "mapshaper": "^0.4.140"
+    "csv2geojson": "^5.1.2",
+    "mapshaper": "^0.6.24"
   },
   "homepage": "https://github.com/genehahn48/map675-module-02-sanfransco-bus#readme"
 }
